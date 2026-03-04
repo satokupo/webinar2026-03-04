@@ -23,7 +23,7 @@ Astro 製スライド（ビルド済み）も内包している。
 │   ├── hooks/         # フックスクリプト（Python）
 │   ├── plans/         # プランファイル置き場（gitignore対象）
 │   ├── rules/         # 条件付き自動ロードルール
-│   ├── skills/        # スキル定義（10個）
+│   ├── skills/        # スキル定義（11個）
 │   ├── temp/          # 一時ファイル置き場（gitignore対象）
 │   └── settings.json  # フック設定・プランディレクトリ設定
 ├── astro/             # ウェビナースライド（Astro 5 + Tailwind CSS 3）
@@ -46,13 +46,14 @@ Astro 製スライド（ビルド済み）も内包している。
 
 ## スキル・フック・エージェント一覧
 
-### スキル（10個）
+### スキル（11個）
 
 | スキル | 説明 |
 |--------|------|
 | `context-handover` | コンテキスト引き継ぎファイル生成 + /compact 送信 |
 | `current-session-id` | 現在のセッションID取得 |
 | `git-commit-rules` | Git コミットのルール・手順 |
+| `omikuji` | 開発者おみくじ（今日の運勢） |
 | `open-slide` | ウェビナースライドをブラウザで開く |
 | `planmode-rules` | プランモードのワークフロー・検証 |
 | `save-chatlog` | チャットログのMarkdown保存 |
