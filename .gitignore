@@ -12,12 +12,13 @@ __pycache__/
 *.py[cod]
 
 # Claude Code（ユーザー固有）
+.claude/plans/
+**/.claude/plans/
 .claude/temp/
 
 # Astro キャッシュ
 **/.astro/
 
-# === ウェビナー用ホワイトリスト（グローバル除外の上書き） ===
+# === ホワイトリスト（グローバル除外の上書き） ===
 # グローバル gitignore で *.mp3 等が除外されるユーザー向け
 !.claude/skills/**/sound/*.mp3
-!.claude/plans/
