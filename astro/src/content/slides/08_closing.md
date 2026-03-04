@@ -9,7 +9,7 @@
 <div class="trigger-cols">
 <div class="trigger-cols__text">
 
-「赤ちゃんはどこまで人間なのか」という本を読んだときに、赤ちゃんが発音しやすい音は B（バ）, D（ダ）, M（マ）, P（パ）と書かれていた。
+「赤ちゃんはどこまで人間なのか」という本を読んだときに、赤ちゃんが発音しやすい音は B（バ）, M（マ）, P（パ）と書かれていた。
 
 エジプトに行ったとき、指差し会話帳に「父: バーバー」「母: マーマー」と書かれていた。
 
@@ -33,16 +33,15 @@
 <div class="lang-card">
 <p class="lang-card__title">🇬🇧 英語</p>
 <table class="lang-card__table">
-<tr><td>父</td><td>Dada</td><td>ダダ</td></tr>
-<tr><td>父</td><td>Papa</td><td>パパ</td></tr>
 <tr><td>母</td><td>Mama</td><td>ママ</td></tr>
+<tr><td>父</td><td>Papa</td><td>パパ</td></tr>
 </table>
 </div>
 <div class="lang-card">
 <p class="lang-card__title">🇸🇦 アラビア語</p>
 <table class="lang-card__table">
-<tr><td>父</td><td>بابا</td><td>バーバー</td></tr>
 <tr><td>母</td><td>ماما</td><td>マーマー</td></tr>
+<tr><td>父</td><td>بابا</td><td>バーバー</td></tr>
 </table>
 </div>
 </div>
@@ -54,14 +53,19 @@
 
 ただ、今回リクエストのもと話すということでAIに聞いてみたところ、言語学の世界では当たり前の話らしかったです。
 
+D（ダ）, T（タ）, N（ナ）は少し遅れて発音できるようになるようなので、
+とと（父）
+dada（父）
+のようなものも入ってきます。お父さんは世界的にもお母さんより言語化されるのが遅い傾向のようです。
+
 ## さらに調べた他の言語での例
 
 <div class="lang-cards-grid">
 <div class="lang-card">
 <p class="lang-card__title">🇫🇷 フランス語</p>
 <table class="lang-card__table">
-<tr><td>父</td><td>papa</td><td>パパ</td></tr>
 <tr><td>母</td><td>maman</td><td>ママン</td></tr>
+<tr><td>父</td><td>papa</td><td>パパ</td></tr>
 <tr><td>赤ちゃん</td><td>bébé</td><td>ベベ</td></tr>
 <tr><td>痛い</td><td>bobo</td><td>ボボ</td></tr>
 </table>
@@ -69,8 +73,8 @@
 <div class="lang-card">
 <p class="lang-card__title">🇮🇹 イタリア語</p>
 <table class="lang-card__table">
-<tr><td>父</td><td>papà</td><td>パパ</td></tr>
 <tr><td>母</td><td>mamma</td><td>マンマ</td></tr>
+<tr><td>父</td><td>papà</td><td>パパ</td></tr>
 <tr><td>離乳食</td><td>pappa</td><td>パッパ</td></tr>
 </table>
 </div>
@@ -86,8 +90,8 @@
 <div class="lang-card">
 <p class="lang-card__title">🇹🇷 トルコ語</p>
 <table class="lang-card__table">
-<tr><td>父</td><td>baba</td><td>ババ</td></tr>
 <tr><td>ごはん</td><td>mama</td><td>ママ</td></tr>
+<tr><td>父</td><td>baba</td><td>ババ</td></tr>
 </table>
 </div>
 <div class="lang-card">
@@ -100,8 +104,8 @@
 <div class="lang-card">
 <p class="lang-card__title">🇮🇳 ヒンディー語</p>
 <table class="lang-card__table">
-<tr><td>父</td><td>पापा</td><td>パーパー</td></tr>
 <tr><td>母</td><td>माँ</td><td>マー</td></tr>
+<tr><td>父</td><td>पापा</td><td>パーパー</td></tr>
 <tr><td>父方の祖父</td><td>दादा</td><td>ダーダー</td></tr>
 </table>
 </div>
@@ -125,8 +129,8 @@
 <div class="lang-card">
 <p class="lang-card__title">🇮🇳 タミル語</p>
 <table class="lang-card__table">
-<tr><td>父</td><td>அப்பா</td><td>アッパー</td></tr>
 <tr><td>母</td><td>அம்மா</td><td>アンマー</td></tr>
+<tr><td>父</td><td>அப்பா</td><td>アッパー</td></tr>
 </table>
 </div>
 </div>
