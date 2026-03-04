@@ -1,0 +1,132 @@
+---
+interface Props {
+  title: string;
+  pageNum: number;
+  totalPages: number;
+  prevSlug: string | null;
+  nextSlug: string | null;
+}
+
+const { title, pageNum, totalPages, prevSlug, nextSlug } = Astro.props;
+---
+
+<header class="slide-header">
+  <button class="menu-toggle" id="menu-toggle" aria-label="メニューを開く">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="slide-header__center">
+    <div class="slide-header__title">{title}</div>
+    <span class="slide-header__page">{pageNum} / {totalPages}</span>
+  </div>
+
+  <nav class="slide-header__nav">
+    {prevSlug ? (
+      <a href={prevSlug} class="nav-btn" aria-label="前のページ">← 前へ</a>
+    ) : (
+      <span class="nav-btn nav-btn--disabled">← 前へ</span>
+    )}
+    {nextSlug ? (
+      <a href={nextSlug} class="nav-btn" aria-label="次のページ">次へ →</a>
+    ) : (
+      <span class="nav-btn nav-btn--disabled">次へ →</span>
+    )}
+  </nav>
+</header>
+
+<style is:global>
+  .slide-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 12px;
+    z-index: 100;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+
+  .menu-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+
+  .menu-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #1e293b;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+
+  .menu-toggle:hover span {
+    background: #2563eb;
+  }
+
+  .slide-header__center {
+    flex: 1;
+    text-align: center;
+    min-width: 0;
+  }
+
+  .slide-header__title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .slide-header__page {
+    font-size: 12px;
+    color: #64748b;
+    display: block;
+    line-height: 1;
+  }
+
+  .slide-header__nav {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .nav-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #2563eb;
+    text-decoration: none;
+    border: 1px solid #2563eb;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+
+  .nav-btn:hover {
+    background: #2563eb;
+    color: #ffffff;
+  }
+
+  .nav-btn--disabled {
+    color: #cbd5e1;
+    border-color: #e2e8f0;
+    cursor: not-allowed;
+  }
+</style>

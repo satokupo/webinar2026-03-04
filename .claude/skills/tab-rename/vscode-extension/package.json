@@ -1,0 +1,25 @@
+{
+  "name": "tab-renamer",
+  "displayName": "Tab Renamer",
+  "description": "Rename VS Code terminal tabs by PID via URI handler",
+  "version": "0.1.0",
+  "publisher": "satokupo",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onUri"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "tab-renamer.rename",
+        "title": "Tab Renamer: Rename by PID"
+      }
+    ]
+  }
+}

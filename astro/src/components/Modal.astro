@@ -1,0 +1,296 @@
+---
+import { getSubTools } from '../lib/slides';
+
+// スキル
+import TabRename from '../popups/skills/tab-rename.astro';
+import TabReset from '../popups/skills/tab-reset.astro';
+import ContextHandover from '../popups/skills/context-handover.astro';
+import CurrentSessionId from '../popups/skills/current-session-id.astro';
+import GitCommitRules from '../popups/skills/git-commit-rules.astro';
+import SkillDesignGuide from '../popups/skills/skill-design-guide.astro';
+
+// エージェント
+import ImplChecker from '../popups/agents/impl-checker.astro';
+
+// フック
+import PrecompactHandover from '../popups/hooks/precompact-handover.astro';
+import SessionstartLoadHandover from '../popups/hooks/sessionstart-load-handover.astro';
+import SendContinue from '../popups/hooks/send-continue.astro';
+
+const subTools = getSubTools();
+const categoryLabel: Record<string, string> = {
+  'スキル': 'skill',
+  'エージェント': 'agent',
+  'フック': 'hook',
+};
+---
+
+<!-- モーダルオーバーレイ -->
+<div class="modal-overlay" id="modal-overlay" aria-hidden="true">
+  <div class="modal-container" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <div class="modal-header__left">
+        <span class="modal-badge" id="modal-badge"></span>
+        <h2 class="modal-title" id="modal-title"></h2>
+      </div>
+      <button class="modal-close" id="modal-close" aria-label="閉じる">×</button>
+    </div>
+    <div class="modal-body" id="modal-body">
+      <!-- コンテンツはJSで差し替え -->
+    </div>
+  </div>
+</div>
+
+<!-- 各サブツールの content を template タグで保持 -->
+<template id="popup-content-tab-rename"><TabRename /></template>
+<template id="popup-content-tab-reset"><TabReset /></template>
+<template id="popup-content-context-handover"><ContextHandover /></template>
+<template id="popup-content-current-session-id"><CurrentSessionId /></template>
+<template id="popup-content-git-commit-rules"><GitCommitRules /></template>
+<template id="popup-content-skill-design-guide"><SkillDesignGuide /></template>
+<template id="popup-content-impl-checker"><ImplChecker /></template>
+<template id="popup-content-precompact-handover"><PrecompactHandover /></template>
+<template id="popup-content-sessionstart-load-handover"><SessionstartLoadHandover /></template>
+<template id="popup-content-send-continue"><SendContinue /></template>
+
+<!-- サブツールメタデータ（JS参照用） -->
+<script define:vars={{ subTools }}>
+  const META = {};
+  for (const t of subTools) {
+    META[t.name] = { category: t.category };
+  }
+
+  const overlay = document.getElementById('modal-overlay');
+  const body = document.getElementById('modal-body');
+  const titleEl = document.getElementById('modal-title');
+  const badgeEl = document.getElementById('modal-badge');
+  const closeBtn = document.getElementById('modal-close');
+
+  function openModal(name) {
+    const tmpl = document.getElementById(`popup-content-${name}`);
+    if (!tmpl || !body) return;
+
+    // コンテンツを差し替え
+    body.innerHTML = '';
+    body.appendChild(tmpl.content.cloneNode(true));
+
+    // タイトル・バッジを更新
+    if (titleEl) titleEl.textContent = name;
+    const meta = META[name] || {};
+    if (badgeEl) {
+      badgeEl.textContent = meta.category || '';
+      badgeEl.className = `modal-badge modal-badge--${meta.category === 'スキル' ? 'skill' : meta.category === 'エージェント' ? 'agent' : 'hook'}`;
+    }
+
+    overlay?.classList.add('modal-overlay--visible');
+    overlay?.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    window.modalOpen = true;
+  }
+
+  function closeModal() {
+    overlay?.classList.remove('modal-overlay--visible');
+    overlay?.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    window.modalOpen = false;
+  }
+
+  // 閉じるボタン
+  closeBtn?.addEventListener('click', closeModal);
+
+  // オーバーレイクリックで閉じる（コンテナ外クリック）
+  overlay?.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+
+  // Escキーで閉じる
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && window.modalOpen) closeModal();
+  });
+
+  // ポップアップリンク（動的生成・既存含む）をイベント委任で処理
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-popup]');
+    if (btn) {
+      const name = btn.getAttribute('data-popup');
+      if (name) openModal(name);
+    }
+  });
+</script>
+
+<style is:global>
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 300;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay--visible {
+    display: flex;
+  }
+
+  .modal-container {
+    background: #ffffff;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 680px;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+  }
+
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e2e8f0;
+    flex-shrink: 0;
+  }
+
+  .modal-header__left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .modal-badge {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .modal-badge--skill {
+    background: #dbeafe;
+    color: #1d4ed8;
+  }
+
+  .modal-badge--agent {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  .modal-badge--hook {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  .modal-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 4px 8px;
+    line-height: 1;
+    border-radius: 6px;
+    flex-shrink: 0;
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .modal-close:hover {
+    color: #1e293b;
+    background: #f1f5f9;
+  }
+
+  .modal-body {
+    overflow-y: auto;
+    padding: 24px 28px;
+    flex: 1;
+  }
+
+  /* モーダル内コンテンツのスタイル */
+  .modal-body .popup-content h1,
+  .modal-body .popup-content h2 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .modal-body .popup-content h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #374151;
+    margin: 16px 0 8px;
+  }
+
+  .modal-body .popup-content p {
+    margin: 0 0 12px;
+    color: #374151;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .modal-body .popup-content ul,
+  .modal-body .popup-content ol {
+    margin: 0 0 12px;
+    padding-left: 20px;
+  }
+
+  .modal-body .popup-content li {
+    font-size: 14px;
+    color: #374151;
+    margin-bottom: 4px;
+    line-height: 1.6;
+  }
+
+  .modal-body .popup-content code {
+    background: #f1f5f9;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: 'SFMono-Regular', Consolas, monospace;
+    color: #0f172a;
+  }
+
+  .modal-body .popup-content pre {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0 0 12px;
+  }
+
+  .modal-body .popup-content pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+  }
+
+  .modal-body .popup-content blockquote {
+    border-left: 3px solid #2563eb;
+    padding-left: 12px;
+    margin: 0 0 12px;
+    color: #64748b;
+  }
+</style>

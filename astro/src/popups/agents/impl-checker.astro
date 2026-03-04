@@ -1,0 +1,5 @@
+---
+import { loadPopupMarkdown } from '../../lib/markdown';
+const html = await loadPopupMarkdown('agents/impl-checker.md');
+---
+<div class="popup-content" set:html={html} />

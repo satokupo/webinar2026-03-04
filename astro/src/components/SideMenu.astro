@@ -1,0 +1,180 @@
+---
+import { getPages } from '../lib/slides';
+
+interface Props {
+  currentId: number;
+}
+
+const { currentId } = Astro.props;
+const pages = getPages();
+---
+
+<div class="side-menu-overlay" id="side-menu-overlay"></div>
+
+<nav class="side-menu" id="side-menu" aria-label="スライドナビゲーション">
+  <div class="side-menu__header">
+    <span class="side-menu__label">スライド一覧</span>
+    <button class="side-menu__close" id="side-menu-close" aria-label="メニューを閉じる">×</button>
+  </div>
+  <ul class="side-menu__list">
+    {pages.map(page => (
+      <li>
+        <a
+          href={page.slug === '/' ? '/' : page.slug}
+          class={`side-menu__link ${page.id === currentId ? 'side-menu__link--active' : ''}`}
+        >
+          <span class="side-menu__num">{page.id}</span>
+          <span class="side-menu__title">{page.title}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('side-menu');
+  const overlay = document.getElementById('side-menu-overlay');
+  const closeBtn = document.getElementById('side-menu-close');
+
+  function openMenu() {
+    menu?.classList.add('side-menu--open');
+    overlay?.classList.add('side-menu-overlay--visible');
+  }
+
+  function closeMenu() {
+    menu?.classList.remove('side-menu--open');
+    overlay?.classList.remove('side-menu-overlay--visible');
+  }
+
+  toggle?.addEventListener('click', openMenu);
+  closeBtn?.addEventListener('click', closeMenu);
+  overlay?.addEventListener('click', closeMenu);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
+</script>
+
+<style is:global>
+  .side-menu-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 150;
+  }
+
+  .side-menu-overlay--visible {
+    display: block;
+  }
+
+  .side-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    background: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    z-index: 200;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .side-menu--open {
+    transform: translateX(0);
+  }
+
+  .side-menu__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e2e8f0;
+    flex-shrink: 0;
+  }
+
+  .side-menu__label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .side-menu__close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 4px 8px;
+    line-height: 1;
+    border-radius: 4px;
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .side-menu__close:hover {
+    color: #1e293b;
+    background: #f1f5f9;
+  }
+
+  .side-menu__list {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .side-menu__link {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #374151;
+    transition: background 0.15s;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .side-menu__link:hover {
+    background: #f1f5f9;
+    color: #2563eb;
+  }
+
+  .side-menu__link--active {
+    background: #eff6ff;
+    color: #2563eb;
+    font-weight: 600;
+  }
+
+  .side-menu__num {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    background: #e2e8f0;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    margin-top: 1px;
+  }
+
+  .side-menu__link--active .side-menu__num {
+    background: #2563eb;
+    color: #ffffff;
+  }
+
+  .side-menu__title {
+    flex: 1;
+  }
+</style>

@@ -1,0 +1,7 @@
+check_interval_days: 14
+last_checked: "2026-02-16"
+history:
+  - date: "2026-02-16"
+    result: "initial"
+    summary: "自動チェックメカニズム導入時の初期エントリ"
+    action: "applied"

@@ -1,0 +1,40 @@
+---
+import SlideLayout from '../layouts/SlideLayout.astro';
+import { loadSlideMarkdown } from '../lib/markdown';
+import { injectPopupLinks } from '../lib/popup-linker';
+
+let html = await loadSlideMarkdown('05_summon-experts.md');
+html = injectPopupLinks(html, ['tab-rename', 'tab-reset']);
+---
+
+<SlideLayout slideId={5}>
+  <div class="slide-page slide-md-page">
+
+    <!-- TODO: 図解化 - Phase 1〜4 のフロー全体図をフロー図に変換 -->
+    <!-- TODO: 図解化 - 内部フロー（各Phaseのデータフロー）を視覚的な構造図に変換 -->
+
+    <div class="md-content" set:html={html} />
+
+    <!-- 関連サブツール群 -->
+    <section class="related-tools">
+      <h2 class="related-tools__heading">関連サブツール</h2>
+      <div class="related-tools__list">
+        <div class="related-tool-item">
+          <button class="popup-link related-tool-btn" data-popup="tab-rename">
+            tab-rename
+          </button>
+          <span class="related-tool-cat">スキル</span>
+          <span class="related-tool-desc">Phase 2 でタブ名を自動設定</span>
+        </div>
+        <div class="related-tool-item">
+          <button class="popup-link related-tool-btn" data-popup="tab-reset">
+            tab-reset
+          </button>
+          <span class="related-tool-cat">スキル</span>
+          <span class="related-tool-desc">セッション終了時にタブ名をリセット</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</SlideLayout>

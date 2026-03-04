@@ -1,0 +1,12 @@
+---
+import SlideLayout from '../layouts/SlideLayout.astro';
+import { loadSlideMarkdown } from '../lib/markdown';
+
+const html = await loadSlideMarkdown('01_index.md');
+---
+
+<SlideLayout slideId={1}>
+  <div class="slide-page slide-md-page">
+    <div class="md-content" set:html={html} />
+  </div>
+</SlideLayout>

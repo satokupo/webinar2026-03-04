@@ -1,0 +1,57 @@
+---
+import Base from './Base.astro';
+import SlideHeader from '../components/SlideHeader.astro';
+import SideMenu from '../components/SideMenu.astro';
+import Modal from '../components/Modal.astro';
+import { getPages, getAdjacentPages } from '../lib/slides';
+
+interface Props {
+  slideId: number;
+}
+
+const { slideId } = Astro.props;
+const pages = getPages();
+const totalPages = pages.length;
+const currentPage = pages.find(p => p.id === slideId);
+const { prev, next } = getAdjacentPages(slideId);
+
+const title = currentPage?.title ?? '';
+const prevSlug = prev ? (prev.slug === '/' ? '/' : prev.slug) : null;
+const nextSlug = next ? (next.slug === '/' ? '/' : next.slug) : null;
+---
+
+<Base title={title}>
+  <SlideHeader
+    title={title}
+    pageNum={slideId}
+    totalPages={totalPages}
+    prevSlug={prevSlug}
+    nextSlug={nextSlug}
+  />
+  <SideMenu currentId={slideId} />
+  <main class="slide-main">
+    <slot />
+  </main>
+  <Modal />
+</Base>
+
+<script define:vars={{ prevSlug, nextSlug }}>
+  // キーボードナビゲーション（モーダル非表示時のみ）
+  document.addEventListener('keydown', (e) => {
+    if (window.modalOpen) return;
+    if (e.key === 'ArrowLeft' && prevSlug) {
+      window.location.href = prevSlug;
+    } else if (e.key === 'ArrowRight' && nextSlug) {
+      window.location.href = nextSlug;
+    }
+  });
+</script>
+
+<style is:global>
+  .slide-main {
+    min-height: calc(100vh - 60px);
+    padding: 32px 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+</style>

@@ -1,0 +1,43 @@
+{
+  "hooks": {
+    "PreCompact": [
+      {
+        "matcher": "auto|manual",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/precompact-handover.py",
+            "timeout": 60,
+            "statusMessage": "ハンドオーバーファイル生成中..."
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 .claude/hooks/sessionstart-load-handover.py",
+            "timeout": 10,
+            "statusMessage": "ハンドオーバーファイル読み込み中..."
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "EnterPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '【必須アクション】planmode-rules スキルを読み込み、そのルールに従ってプラン作成を進めてください。'",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  },
+  "plansDirectory": ".claude/plans"
+}

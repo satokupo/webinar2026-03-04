@@ -1,0 +1,65 @@
+---
+import SlideLayout from '../layouts/SlideLayout.astro';
+import { loadSlideMarkdown } from '../lib/markdown';
+import { injectPopupLinks } from '../lib/popup-linker';
+
+const popups = [
+  'context-handover',
+  'current-session-id',
+  'impl-checker',
+  'git-commit-rules',
+  'precompact-handover',
+  'sessionstart-load-handover',
+];
+
+let html = await loadSlideMarkdown('06_planmode-rules.md');
+html = injectPopupLinks(html, popups);
+---
+
+<SlideLayout slideId={6}>
+  <div class="slide-page slide-md-page">
+
+    <!-- TODO: 図解化 - Phase 1〜5 のフロー全体図をフロー図に変換 -->
+    <!-- TODO: 図解化 - フック連携の構造図（プランモード前後のフック発動タイミング）を視覚化 -->
+
+    <div class="md-content" set:html={html} />
+
+    <!-- 関連サブツール群 -->
+    <section class="related-tools">
+      <h2 class="related-tools__heading">関連サブツール</h2>
+      <div class="related-tools__list">
+        <div class="related-tool-item">
+          <button class="popup-link related-tool-btn" data-popup="context-handover">context-handover</button>
+          <span class="related-tool-cat">スキル</span>
+          <span class="related-tool-desc">Phase 3 Step 0: コンテキスト引き継ぎ</span>
+        </div>
+        <div class="related-tool-item">
+          <button class="popup-link related-tool-btn" data-popup="current-session-id">current-session-id</button>
+          <span class="related-tool-cat">スキル</span>
+          <span class="related-tool-desc">Phase 3: セッションID取得</span>
+        </div>
+        <div class="related-tool-item">
+          <button class="popup-link related-tool-btn" data-popup="impl-checker">impl-checker</button>
+          <span class="related-tool-cat related-tool-cat--agent">エージェント</span>
+          <span class="related-tool-desc">プランフッター定型文: 実装検証エージェント</span>
+        </div>
+        <div class="related-tool-item">
+          <button class="popup-link related-tool-btn" data-popup="git-commit-rules">git-commit-rules</button>
+          <span class="related-tool-cat">スキル</span>
+          <span class="related-tool-desc">プランフッター定型文: コミットルール</span>
+        </div>
+        <div class="related-tool-item">
+          <button class="popup-link related-tool-btn" data-popup="precompact-handover">precompact-handover</button>
+          <span class="related-tool-cat related-tool-cat--hook">フック</span>
+          <span class="related-tool-desc">コンパクション前の自動引き継ぎ</span>
+        </div>
+        <div class="related-tool-item">
+          <button class="popup-link related-tool-btn" data-popup="sessionstart-load-handover">sessionstart-load-handover</button>
+          <span class="related-tool-cat related-tool-cat--hook">フック</span>
+          <span class="related-tool-desc">圧縮後の引き継ぎファイル自動注入</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</SlideLayout>

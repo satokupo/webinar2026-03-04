@@ -1,0 +1,47 @@
+---
+import SlideLayout from '../layouts/SlideLayout.astro';
+import { loadSlideMarkdown } from '../lib/markdown';
+import { injectPopupLinks } from '../lib/popup-linker';
+
+const popups = [
+  'current-session-id',
+  'git-commit-rules',
+  'tab-reset',
+];
+
+let html = await loadSlideMarkdown('07_save-chatlog.md');
+html = injectPopupLinks(html, popups);
+---
+
+<SlideLayout slideId={7}>
+  <div class="slide-page slide-md-page">
+
+    <!-- TODO: 図解化 - Step 1〜4 のフローを図解に変換 -->
+    <!-- TODO: 図解化 - セッションID→ファイル名生成の仕組みを構造図に変換 -->
+
+    <div class="md-content" set:html={html} />
+
+    <!-- 関連サブツール群 -->
+    <section class="related-tools">
+      <h2 class="related-tools__heading">関連サブツール</h2>
+      <div class="related-tools__list">
+        <div class="related-tool-item">
+          <button class="popup-link related-tool-btn" data-popup="current-session-id">current-session-id</button>
+          <span class="related-tool-cat">スキル</span>
+          <span class="related-tool-desc">Step 2: セッションID取得でログファイル名を確定</span>
+        </div>
+        <div class="related-tool-item">
+          <button class="popup-link related-tool-btn" data-popup="git-commit-rules">git-commit-rules</button>
+          <span class="related-tool-cat">スキル</span>
+          <span class="related-tool-desc">Step 3: エラーログ後のコミット</span>
+        </div>
+        <div class="related-tool-item">
+          <button class="popup-link related-tool-btn" data-popup="tab-reset">tab-reset</button>
+          <span class="related-tool-cat">スキル</span>
+          <span class="related-tool-desc">Step 4: tmuxタブをリセット</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</SlideLayout>
