@@ -11,17 +11,7 @@ function stripMdLinks(html: string): string {
 }
 
 /**
- * プロジェクトルート（KAMUIウェビナー/）からの相対パスでmdファイルを読み込み
- * markedでHTMLに変換して返す（popupsなど外部参照用）
- */
-export async function loadMarkdownAsHtml(relativePath: string): Promise<string> {
-  const fullPath = path.resolve(process.cwd(), '..', relativePath);
-  const raw = fs.readFileSync(fullPath, 'utf-8');
-  return stripMdLinks(await marked(raw));
-}
-
-/**
- * front/src/content/popups/ からカテゴリ付きパスでmdを読み込む
+ * astro/src/content/popups/ からカテゴリ付きパスでmdを読み込む
  * 例: loadPopupMarkdown('skills/tab-rename.md')
  */
 export async function loadPopupMarkdown(relativePath: string): Promise<string> {
@@ -31,7 +21,7 @@ export async function loadPopupMarkdown(relativePath: string): Promise<string> {
 }
 
 /**
- * front/src/content/slides/ からファイル名でmdを読み込み
+ * astro/src/content/slides/ からファイル名でmdを読み込み
  * markedでHTMLに変換して返す（スライドページ用）
  */
 export async function loadSlideMarkdown(filename: string): Promise<string> {

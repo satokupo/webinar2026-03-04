@@ -20,7 +20,7 @@ interface SlidesData {
 }
 
 function loadData(): SlidesData {
-  const dataPath = path.resolve(process.cwd(), '../docs/slides-data.yaml');
+  const dataPath = path.resolve(process.cwd(), 'src/data/slides-data.yaml');
   const raw = fs.readFileSync(dataPath, 'utf-8');
   return yaml.load(raw) as SlidesData;
 }

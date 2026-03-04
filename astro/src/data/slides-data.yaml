@@ -1,0 +1,83 @@
+# スライドデータソース（Astro が読み込む実データ）
+# storyboard.yaml は構成書、このファイルは実装用データ
+
+pages:
+  - id: 1
+    slug: "/"
+    title: "タイトル / 今日の流れ"
+
+  - id: 2
+    slug: "/02-intro-career"
+    title: "自己紹介: 経歴"
+
+  - id: 3
+    slug: "/03-intro-environment"
+    title: "自己紹介: 環境とスタンス"
+
+  - id: 4
+    slug: "/04-overview"
+    title: "全体像: 2層構成"
+
+  - id: 5
+    slug: "/05-summon-experts"
+    title: "summon-experts"
+
+  - id: 6
+    slug: "/06-planmode-rules"
+    title: "planmode-rules"
+
+  - id: 7
+    slug: "/07-save-chatlog"
+    title: "save-chatlog"
+
+  - id: 8
+    slug: "/08-closing"
+    title: "おまけ（クロージング）: 赤ちゃんが作った言葉？"
+
+# サブツールのポップアップ定義
+# name: 本文中でこの文字列が出たらポップアップリンク化する
+# source: ポップアップ内容のソースファイル
+# category: スキル / エージェント / フック
+sub_tools:
+  # スキル
+  - name: "tab-rename"
+    source: "説明/02_サブツール/スキル/tab-rename.md"
+    category: "スキル"
+
+  - name: "tab-reset"
+    source: "説明/02_サブツール/スキル/tab-reset.md"
+    category: "スキル"
+
+  - name: "context-handover"
+    source: "説明/02_サブツール/スキル/context-handover.md"
+    category: "スキル"
+
+  - name: "current-session-id"
+    source: "説明/02_サブツール/スキル/current-session-id.md"
+    category: "スキル"
+
+  - name: "git-commit-rules"
+    source: "説明/02_サブツール/スキル/git-commit-rules.md"
+    category: "スキル"
+
+  - name: "skill-design-guide"
+    source: "説明/02_サブツール/スキル/skill-design-guide.md"
+    category: "スキル"
+
+  # エージェント
+  - name: "impl-checker"
+    source: "説明/02_サブツール/エージェント/impl-checker.md"
+    category: "エージェント"
+
+  # フック
+  - name: "precompact-handover"
+    source: "説明/02_サブツール/フック/precompact-handover.md"
+    category: "フック"
+
+  - name: "sessionstart-load-handover"
+    source: "説明/02_サブツール/フック/sessionstart-load-handover.md"
+    category: "フック"
+
+  - name: "send-continue"
+    source: "説明/02_サブツール/フック/send-continue.md"
+    category: "フック"
